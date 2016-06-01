@@ -19,13 +19,25 @@ import java.util.Map;
 
 public class DataConsumer {
     public static void main(String args[]) {
+        System.out.println("How to use: java -cp [jarfile] DataConsumer [address] [broker port] [topic name] [max read] [file name]");
+        System.out.println("Example : java -cp kafka_consumer.jar DataConsumer localhost 9092 part 1000000 parts.csv");
         DataConsumer example = new DataConsumer();
-        long maxReads = 10;
-        String topic = "part";
         int partition = 0;
         List<String> seeds = new ArrayList<String>();
-        seeds.add("localhost");
-        int port = 9092;
+
+//        String topic = "part";
+//        seeds.add("localhost");
+//        long maxReads = 1000000;
+//        int port = 9092;
+//        fileName = "parts.csv";
+
+        seeds.add(args[0]);
+        int port = Integer.parseInt(args[1]);
+        String topic = args[2];
+        long maxReads = Long.parseLong(args[3]);
+        fileName = args[4];
+
+
         try {
             example.run(maxReads, topic, partition, seeds, port);
         } catch (Exception e) {
@@ -36,7 +48,7 @@ public class DataConsumer {
     private final String CSV_SEPARATOR = ",";
     private List<Part> partList;
     private ObjectMapper objectMapper;
-
+    private static String fileName = "";
     private List<String> m_replicaBrokers = new ArrayList<String>();
 
     public DataConsumer() {
@@ -128,7 +140,7 @@ public class DataConsumer {
     private void writeToCsv() {
         BufferedWriter bw = null;
         try {
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("parts.csv"), "UTF-8"));
+            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8"));
 
             for (Part part : partList)
             {

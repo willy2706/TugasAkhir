@@ -2,15 +2,10 @@ package model;
 
 import helper.Helper;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
 /**
  * Created by nim_13512065 on 5/31/16.
  */
-public class Part implements Serializable {
+public class Part implements ModelInterface {
     private int P_PARTKEY;
     private String P_NAME;
     private String P_MFGR;
@@ -32,7 +27,7 @@ public class Part implements Serializable {
         setP_TYPE(Helper.randomStringFixedLength(2));
         setP_SIZE(Helper.randomStringFixedLength(2));
         setP_CONTAINER(Helper.randomStringFixedLength(5));
-        setP_RETAILPRICE(Helper.randomNumberWithLimit(5));
+        setP_RETAILPRICE(Helper.randomIntegerWithLimit(5));
         setP_COMMENT(Helper.randomStringFixedLength(100));
     }
 
@@ -106,17 +101,5 @@ public class Part implements Serializable {
 
     public void setP_COMMENT(String p_COMMENT) {
         P_COMMENT = p_COMMENT;
-    }
-
-    public String toString() {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = null;
-        try {
-            oos = new ObjectOutputStream(baos);
-            oos.writeObject(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return baos.toString();
     }
 }
