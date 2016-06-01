@@ -27,7 +27,7 @@ public class Part implements ModelInterface {
         setP_TYPE(Helper.randomStringFixedLength(2));
         setP_SIZE(Helper.randomStringFixedLength(2));
         setP_CONTAINER(Helper.randomStringFixedLength(5));
-        setP_RETAILPRICE(Helper.randomIntegerWithLimit(5));
+        setP_RETAILPRICE(Helper.randomIntegerWithLimit(10000));
         setP_COMMENT(Helper.randomStringFixedLength(100));
     }
 
