@@ -1,12 +1,15 @@
 package helper;
 
 import java.security.SecureRandom;
+import java.sql.Timestamp;
 import java.util.Random;
 
 /**
  * Created by nim_13512065 on 5/31/16.
  */
 public class Helper {
+
+    public static int MAX_ROW = 1000000;
     private static final String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     private static final String NUMBER = "0123456789";
     private static SecureRandom rnd = new SecureRandom();
@@ -33,5 +36,12 @@ public class Helper {
     public static int randomIntegerWithRange(int min, int max) {
         int randomNum = random.nextInt((max - min) + 1) + min;
         return randomNum;
+    }
+
+    public static long randomTimestampt() {
+        long offset = Timestamp.valueOf("2012-01-01 00:00:00").getTime();
+        long end = Timestamp.valueOf("2013-01-01 00:00:00").getTime();
+        long diff = end - offset + 1;
+        return offset + (long)(Math.random() * diff);
     }
 }

@@ -9,7 +9,7 @@ public class Supplier implements ModelInterface {
     private int S_SUPPKEY;
     private String S_NAME;
     private String S_ADDRESS;
-    private String S_NATIONKEY;
+    private int S_NATIONKEY;
     private String S_PHONE;
     private int S_ACCTBAL;
     private String S_COMMENT;
@@ -22,7 +22,7 @@ public class Supplier implements ModelInterface {
         setS_SUPPKEY(id);
         setS_NAME(Helper.randomStringFixedLength(10));
         setS_ADDRESS(Helper.randomStringFixedLength(20));
-        setS_NATIONKEY(Helper.randomStringFixedLength(4));
+        setS_NATIONKEY(Helper.randomIntegerWithRange(1, Helper.MAX_ROW));
         setS_PHONE(Helper.randomNumberFixedLength(10));
         setS_ACCTBAL(Helper.randomIntegerWithLimit(1000000));
         setS_COMMENT(Helper.randomStringFixedLength(20));
@@ -52,11 +52,11 @@ public class Supplier implements ModelInterface {
         S_ADDRESS = s_ADDRESS;
     }
 
-    public String getS_NATIONKEY() {
+    public int getS_NATIONKEY() {
         return S_NATIONKEY;
     }
 
-    public void setS_NATIONKEY(String s_NATIONKEY) {
+    public void setS_NATIONKEY(int s_NATIONKEY) {
         S_NATIONKEY = s_NATIONKEY;
     }
 

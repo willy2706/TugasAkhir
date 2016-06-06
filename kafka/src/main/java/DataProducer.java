@@ -1,3 +1,4 @@
+import helper.Helper;
 import kafka.consumer.Consumer;
 import kafka.consumer.ConsumerConfig;
 import kafka.consumer.ConsumerIterator;
@@ -6,8 +7,7 @@ import kafka.javaapi.consumer.ConsumerConnector;
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
-import model.ModelInterface;
-import model.Part;
+import model.*;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
@@ -48,14 +48,15 @@ public class DataProducer {
         producer = new Producer<>(config);
     }
     public static void main(String[] args) throws IOException {
-        System.out.println("How to use: java DataProducer [address] [broker port] [min id] [max id] [topic name] [type]");
-        System.out.println("Example : java -cp kafka_producer.jar DataProducer localhost 9092 1 1000000 part 1");
+        System.out.println("How to use: java DataProducer [address] [broker port] [min id] [max id] [topic name] [type] [max row]");
+        System.out.println("Example : java -cp kafka_producer.jar DataProducer localhost 9092 1 1000000 part 1 1000000");
         String address = args[0];
         int port = Integer.parseInt(args[1]);
         int minId = Integer.parseInt(args[2]);
         int maxId = Integer.parseInt(args[3]);
         String topicName = args[4];
         int type = Integer.parseInt(args[5]);
+        Helper.MAX_ROW = Integer.parseInt(args[6]);
 
 //        String address = "localhost";
 //        int port = 9092;
@@ -73,6 +74,27 @@ public class DataProducer {
             switch (type) {
                 case 1:
                     modelInterface = new Part(i);
+                    break;
+                case 2:
+                    modelInterface = new Supplier(i);
+                    break;
+                case 3:
+                    modelInterface = new Partsupp();
+                    break;
+                case 4:
+                    modelInterface = new Lineitem();
+                    break;
+                case 5:
+                    modelInterface = new Orders(i);
+                    break;
+                case 6:
+                    modelInterface = new Customer(i);
+                    break;
+                case 7:
+                    modelInterface = new Nation(i);
+                    break;
+                case 8:
+                    modelInterface = new Region(i);
                     break;
             }
             String serializedObject = mapper.writeValueAsString(modelInterface);
