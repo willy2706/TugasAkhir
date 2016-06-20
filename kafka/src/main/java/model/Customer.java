@@ -23,7 +23,7 @@ public class Customer implements ModelInterface {
         setC_CUSTKEY(id);
         setC_NAME(Helper.randomNumberFixedLength(10));
         setC_ADDRESS(Helper.randomNumberFixedLength(20));
-        setC_NATIONKEY(Helper.randomIntegerWithRange(1,100));
+        setC_NATIONKEY(Helper.randomIntegerWithRange(1,25));
         setC_PHONE(Helper.randomNumberFixedLength(7));
         setC_ACCTBAL(Helper.randomIntegerWithLimit(1000000));
         setC_MKTSEGMENT(Helper.randomStringFixedLength(30));

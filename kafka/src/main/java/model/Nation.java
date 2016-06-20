@@ -18,7 +18,7 @@ public class Nation implements ModelInterface {
     public Nation (int id) {
         setN_NATIONKEY(id);
         setN_NAME(Helper.randomStringFixedLength(10));
-        setN_REGIONKEY(Helper.randomIntegerWithRange(1,10));
+        setN_REGIONKEY(Helper.randomIntegerWithRange(1,5));
         setN_COMMENT(Helper.randomStringFixedLength(20));
     }
 

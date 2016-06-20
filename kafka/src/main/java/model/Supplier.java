@@ -22,7 +22,7 @@ public class Supplier implements ModelInterface {
         setS_SUPPKEY(id);
         setS_NAME(Helper.randomStringFixedLength(10));
         setS_ADDRESS(Helper.randomStringFixedLength(20));
-        setS_NATIONKEY(Helper.randomIntegerWithRange(1, Helper.MAX_ROW));
+        setS_NATIONKEY(Helper.randomIntegerWithRange(1, 25));
         setS_PHONE(Helper.randomNumberFixedLength(10));
         setS_ACCTBAL(Helper.randomIntegerWithLimit(1000000));
         setS_COMMENT(Helper.randomStringFixedLength(20));
