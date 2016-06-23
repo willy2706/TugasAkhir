@@ -75,7 +75,7 @@ public class DataProducer {
                     modelInterface = new Partsupp();
                     break;
                 case 4:
-                    modelInterface = new Lineitem();
+                    modelInterface = new Lineitem(i);
                     break;
                 case 5:
                     modelInterface = new Orders(i);
