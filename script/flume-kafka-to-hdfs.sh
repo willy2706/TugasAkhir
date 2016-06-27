@@ -13,7 +13,6 @@ do
 	nohup $FLUMEDIR/bin/flume-ng agent --conf conf --conf-file $strtmp --name $i -Dflume.root.logger=INFO,console &
 done
 
-# nohup bin/flume-ng agent --conf conf --conf-file flume/kafkaHDFSpart.conf --name kafkaHDFSpart -Dflume.root.logger=INFO,console &
 # nohup $FLUMEDIR/bin/flume-ng agent --conf conf --conf-file $FLUMEDIR/flume/kafkaHDFSpart.conf --name kafkaHDFSpart -Dflume.root.logger=INFO,console &
 # nohup $FLUMEDIR/bin/flume-ng agent --conf conf --conf-file $FLUMEDIR/flume/kafkaHDFSsupplier.conf --name kafkaHDFSsupplier -Dflume.root.logger=INFO,console &
 # nohup $FLUMEDIR/bin/flume-ng agent --conf conf --conf-file $FLUMEDIR/flume/kafkaHDFSpartsupp.conf --name kafkaHDFSpartsupp -Dflume.root.logger=INFO,console &
