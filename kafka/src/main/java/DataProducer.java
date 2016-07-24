@@ -35,7 +35,7 @@ public class DataProducer {
         producerProperties.put("serializer.class", "kafka.serializer.StringEncoder");
 //        props.put("partitioner.class", "SimplePartitioner");
         producerProperties.put("request.required.acks", "1");
-        Helper.MAX_ROW = 1000000;
+//        Helper.MAX_ROW = 1000000;
         config = new ProducerConfig(producerProperties);
         producer = new Producer<>(config);
     }

@@ -2,9 +2,13 @@ LINEITEM = LOAD 'hdfs://localhost:54310/user/hduser/lineitem' USING PigStorage('
 PART = LOAD 'hdfs://localhost:54310/user/hduser/part' USING PigStorage(',') AS (P_PARTKEY: int, P_NAME: chararray, P_MFGR: chararray, P_BRAND: chararray, P_TYPE: chararray, P_SIZE: chararray, P_CONTAINER: chararray, P_RETAILPRICE: chararray, P_COMMENT: chararray);
 
 LINEITEM = LOAD 'hdfs://167.205.35.25:9000/user/willyTA/1GB/lineitem' USING PigStorage(',') AS (L_ORDERKEY: int, L_LINENUMBER: int, L_PARTKEY: int, L_SUPPKEY: int, L_QUANTITY: int, L_EXTENDEDPRICE: int, L_DISCOUNT: int, L_TAX: int, L_RETURNFLAG: int, L_LINESTATUS: chararray, L_SHIPDATE: long, L_COMMITDATE: long, L_RECEIPTDATE: long, L_SHIPINSTRUCT: chararray, L_SHIPMODE: chararray, L_COMMENT: chararray);
-LINEITEM = LOAD 'hdfs://167.205.35.25:9000/user/willyTA/3GB/lineitem' USING PigStorage(',') AS (L_ORDERKEY: int, L_LINENUMBER: int, L_PARTKEY: int, L_SUPPKEY: int, L_QUANTITY: int, L_EXTENDEDPRICE: int, L_DISCOUNT: int, L_TAX: int, L_RETURNFLAG: int, L_LINESTATUS: chararray, L_SHIPDATE: long, L_COMMITDATE: long, L_RECEIPTDATE: long, L_SHIPINSTRUCT: chararray, L_SHIPMODE: chararray, L_COMMENT: chararray);
 PART = LOAD 'hdfs://167.205.35.25:9000/user/willyTA/1GB/part' USING PigStorage(',') AS (P_PARTKEY: int, P_NAME: chararray, P_MFGR: chararray, P_BRAND: chararray, P_TYPE: chararray, P_SIZE: chararray, P_CONTAINER: chararray, P_RETAILPRICE: chararray, P_COMMENT: chararray);
+
+LINEITEM = LOAD 'hdfs://167.205.35.25:9000/user/willyTA/3GB/lineitem' USING PigStorage(',') AS (L_ORDERKEY: int, L_LINENUMBER: int, L_PARTKEY: int, L_SUPPKEY: int, L_QUANTITY: int, L_EXTENDEDPRICE: int, L_DISCOUNT: int, L_TAX: int, L_RETURNFLAG: int, L_LINESTATUS: chararray, L_SHIPDATE: long, L_COMMITDATE: long, L_RECEIPTDATE: long, L_SHIPINSTRUCT: chararray, L_SHIPMODE: chararray, L_COMMENT: chararray);
 PART = LOAD 'hdfs://167.205.35.25:9000/user/willyTA/3GB/part' USING PigStorage(',') AS (P_PARTKEY: int, P_NAME: chararray, P_MFGR: chararray, P_BRAND: chararray, P_TYPE: chararray, P_SIZE: chararray, P_CONTAINER: chararray, P_RETAILPRICE: chararray, P_COMMENT: chararray);
+
+LINEITEM = LOAD 'hdfs://167.205.35.25:9000/user/willyTA/testing/lineitem' USING PigStorage(',') AS (L_ORDERKEY: int, L_LINENUMBER: int, L_PARTKEY: int, L_SUPPKEY: int, L_QUANTITY: int, L_EXTENDEDPRICE: int, L_DISCOUNT: int, L_TAX: int, L_RETURNFLAG: int, L_LINESTATUS: chararray, L_SHIPDATE: long, L_COMMITDATE: long, L_RECEIPTDATE: long, L_SHIPINSTRUCT: chararray, L_SHIPMODE: chararray, L_COMMENT: chararray);
+PART = LOAD 'hdfs://167.205.35.25:9000/user/willyTA/testing/part' USING PigStorage(',') AS (P_PARTKEY: int, P_NAME: chararray, P_MFGR: chararray, P_BRAND: chararray, P_TYPE: chararray, P_SIZE: chararray, P_CONTAINER: chararray, P_RETAILPRICE: chararray, P_COMMENT: chararray);
 
 tmp1 = JOIN LINEITEM BY L_PARTKEY, PART BY P_PARTKEY;
 tmp2 = GROUP tmp1 ALL;
@@ -22,9 +26,16 @@ tmp7 = FOREACH tmp6 {
 	GENERATE y;
 };
 
+-- hasil
+-- 151.14285714285714
+
+-- expected
+-- 151.1428571429
+
+
 STORE tmp7 INTO 'hdfs://localhost:54310/user/hduser/result9' USING PigStorage(',');
-STORE tmp7 INTO 'hdfs://167.205.35.25:9000/user/willyTA/1GB/result9' USING PigStorage(',');
-STORE tmp7 INTO 'hdfs://167.205.35.25:9000/user/willyTA/3GB/result9' USING PigStorage(',');
+STORE tmp7 INTO 'hdfs://167.205.35.25:9000/user/willyTA/1GB/result17' USING PigStorage(',');
+STORE tmp7 INTO 'hdfs://167.205.35.25:9000/user/willyTA/3GB/result17' USING PigStorage(',');
 
 --untuk tau brand dan container
 -- PART = LOAD 'hdfs://localhost:54310/user/hduser/part' USING PigStorage(',') AS (P_PARTKEY: int, P_NAME: chararray, P_MFGR: chararray, P_BRAND: chararray, P_TYPE: chararray, P_SIZE: chararray, P_CONTAINER: chararray, P_RETAILPRICE: chararray, P_COMMENT: chararray);
@@ -34,10 +45,19 @@ STORE tmp7 INTO 'hdfs://167.205.35.25:9000/user/willyTA/3GB/result9' USING PigSt
 -- tmp_brand3 = LIMIT tmp_brand2 1;
 
 -- HELPER
-x = FOREACH PART GENERATE P_PARTKEY, P_NAME, P_MFGR, (P_PARTKEY<=3000000?'abcde':P_BRAND) as P_BRAND, (P_PARTKEY<=3000000?'1B':P_TYPE) as P_TYPE, P_SIZE, (P_PARTKEY<=3000000?'abcde':P_CONTAINER) as P_CONTAINER, P_RETAILPRICE, P_COMMENT;
+x = FOREACH PART GENERATE P_PARTKEY, P_NAME, P_MFGR, (P_PARTKEY<=30?'abcde':P_BRAND) as P_BRAND, (P_PARTKEY<=30?'1B':P_TYPE) as P_TYPE, P_SIZE, (P_PARTKEY<=30?'abcde':P_CONTAINER) as P_CONTAINER, P_RETAILPRICE, P_COMMENT;
 
+STORE x INTO 'hdfs://167.205.35.25:9000/user/willyTA/testing/part-new' USING PigStorage(',');
 STORE x INTO 'hdfs://167.205.35.25:9000/user/willyTA/1GB/part-new' USING PigStorage(',');
 STORE x INTO 'hdfs://167.205.35.25:9000/user/willyTA/3GB/part-new' USING PigStorage(',');
+
+y = FOREACH SUPPLIER GENERATE S_SUPPKEY, S_NAME, S_ADDRESS, (S_SUPPKEY == 49 ? 14 : S_NATIONKEY) AS S_NATIONKEY, S_PHONE, S_ACCTBAL, S_COMMENT;
+z = FOREACH y GENERATE S_SUPPKEY, S_NAME, S_ADDRESS, (S_SUPPKEY == 48 ? 8 : S_NATIONKEY) AS S_NATIONKEY, S_PHONE, S_ACCTBAL, S_COMMENT;
+STORE z INTO 'hdfs://167.205.35.25:9000/user/willyTA/testing/supplier-new' USING PigStorage(',');
+
+a = FOREACH ORDERS GENERATE O_ORDERKEY, O_CUSTKEY, O_ORDERSTATUS, O_TOTALPRICE, (O_ORDERKEY == 8 ? 1343969782817L : O_ORDERDATE) AS O_ORDERDATE, O_ORDERPRIORITY, O_CLERK, O_SHIPPRIORITY, O_COMMENT;
+b = FOREACH a GENERATE O_ORDERKEY, O_CUSTKEY, O_ORDERSTATUS, O_TOTALPRICE, (O_ORDERKEY == 29 ? 1343969782817L : O_ORDERDATE) AS O_ORDERDATE, O_ORDERPRIORITY, O_CLERK, O_SHIPPRIORITY, O_COMMENT;
+STORE b INTO 'hdfs://167.205.35.25:9000/user/willyTA/testing/orders-new' USING PigStorage(',');
 
 tmp_brandx = GROUP x BY P_NAME;
 tmp_brandx1 = FOREACH tmp_brandx GENERATE group, COUNT(x.P_PARTKEY) as cnt;
